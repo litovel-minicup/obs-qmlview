@@ -73,13 +73,15 @@ class FrameCounter : public QObject
     QTimer          m_printer;
 
 public:
-    FrameCounter(const QString &name) : QObject(), m_myname(name), m_count(0)
+    FrameCounter(const QString &name, bool print = true) : QObject(), m_myname(name), m_count(0)
     {
-        m_printer.setInterval(30000);
-        m_printer.setSingleShot(false);
-        connect( &m_printer, SIGNAL(timeout()), this, SLOT(printFPS()) );
-        m_printer.start();
-        m_timer.start();
+        if(print) {
+            m_printer.setInterval(30000);
+            m_printer.setSingleShot(false);
+            connect(&m_printer, SIGNAL(timeout()), this, SLOT(printFPS()));
+            m_printer.start();
+            m_timer.start();
+        }
     }
 
 public slots:

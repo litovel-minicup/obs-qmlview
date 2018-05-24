@@ -39,6 +39,8 @@
 ****************************************************************************/
 
 #include "renderer.h"
+#include "../../UI/sharedwebsocket.h"
+#include "../../UI/streammatchinfomanager.h"
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QOpenGLFramebufferObject>
@@ -452,6 +454,9 @@ void WindowSingleThreaded::startQuick(const QUrl &url)
         m_qmlEngine->setIncubationController(m_quickWindow->incubationController());
 
     m_qmlEngine->rootContext()->setContextProperty("engine", this);
+    m_qmlEngine->rootContext()->setContextProperty(
+            "matchData", StreamMatchInfoManager::instance());
+
     connect( m_qmlEngine, &QQmlEngine::warnings, this, &WindowSingleThreaded::handleWarnings );
     m_qmlEngine->setBaseUrl(url);
     addQmlPath();
@@ -572,7 +577,7 @@ void WindowSingleThreaded::triggerSnap()
     //qDebug() << " ++ Frame changed!";
     m_frameChanged = true;
     /*
-    if( m_wantFrame )
+    if( m_wantFrame )+
     {
         m_wantFrame = false;
         emit snapWanted();

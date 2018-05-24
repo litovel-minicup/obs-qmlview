@@ -6,8 +6,6 @@
 #include "qmlview.h"
 #include "renderer.h"
 
-#include <QtWebEngine/qtwebengineglobal.h>
-
 #include <sys/time.h>
 
 static bool m_weinit {false};
@@ -38,7 +36,6 @@ OBSQuickview::OBSQuickview(QObject *parent)
     if( !m_weinit )
     {
         m_weinit = true;
-        QtWebEngine::initialize();
         addPluginsPath();
     }
 
@@ -51,9 +48,9 @@ OBSQuickview::OBSQuickview(QObject *parent)
 
     connect( m_quickView, &WindowSingleThreaded::capped, this, &OBSQuickview::qmlCopy );
 
-    m_renderCounter = new FrameCounter("QmlView::render");
-    m_drawCounter = new FrameCounter("QmlView::draw");
-    m_qmlFrameCounter = new FrameCounter("QmlView::frame");
+    m_renderCounter = new FrameCounter("QmlView::render", false);
+    m_drawCounter = new FrameCounter("QmlView::draw", false);
+    m_qmlFrameCounter = new FrameCounter("QmlView::frame", false);
 
     connect( this, &OBSQuickview::frameRendered, this, &OBSQuickview::qmlFrame, Qt::QueuedConnection );
 }
