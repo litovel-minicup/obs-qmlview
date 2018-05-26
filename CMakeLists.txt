@@ -48,7 +48,8 @@ add_library(obs-qmlview MODULE
         ${qmlview_HEADERS}
 )
 target_link_libraries(obs-qmlview
-        obs-connection
+        match-info-manager
+        match-connection
         libobs
         Qt5::Quick
         Qt5::QuickWidgets
