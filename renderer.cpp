@@ -39,8 +39,6 @@
 ****************************************************************************/
 
 #include "renderer.h"
-#include "../../UI/sharedwebsocket.h"
-#include "../../UI/streammatchinfomanager.h"
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QOpenGLFramebufferObject>
@@ -57,9 +55,13 @@
 #include <QQuickWindow>
 #include <QQuickRenderControl>
 #include <QCoreApplication>
+#include <QJsonDocument>
 
 #include <QDir>
 #include <QUrlQuery>
+
+#include "../../obs-connection/reconnectingsocket.h"
+
 
 class RenderControl : public QQuickRenderControl
 {
@@ -457,6 +459,8 @@ void WindowSingleThreaded::startQuick(const QUrl &url)
     m_qmlEngine->rootContext()->setContextProperty(
             "matchData", StreamMatchInfoManager::instance());
 
+    TestFoo f;
+    qDebug() << "baf" << f.boo();
     connect( m_qmlEngine, &QQmlEngine::warnings, this, &WindowSingleThreaded::handleWarnings );
     m_qmlEngine->setBaseUrl(url);
     addQmlPath();
