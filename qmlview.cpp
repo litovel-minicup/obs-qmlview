@@ -371,8 +371,12 @@ static void quickview_source_update(void *data, obs_data_t *settings)
             if( fi.exists() )
                 s->loadUrl( url );
         }
-        else
-            s->loadUrl( url );
+
+	    else {
+		    QFileInfo fi(url.path());
+            if(fi.exists())
+		        s->loadUrl(url);
+	    }
     }
 }
 
