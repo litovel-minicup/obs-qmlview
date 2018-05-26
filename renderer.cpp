@@ -60,7 +60,7 @@
 #include <QDir>
 #include <QUrlQuery>
 
-#include "../../obs-connection/reconnectingsocket.h"
+#include "../../match-info-manager/streammatchinfomanager.h"
 
 
 class RenderControl : public QQuickRenderControl
@@ -452,15 +452,13 @@ void WindowSingleThreaded::startQuick(const QUrl &url)
 
     // Create a QML engine.
     m_qmlEngine = new QQmlEngine;
+
     if (!m_qmlEngine->incubationController())
         m_qmlEngine->setIncubationController(m_quickWindow->incubationController());
 
     m_qmlEngine->rootContext()->setContextProperty("engine", this);
-    m_qmlEngine->rootContext()->setContextProperty(
-            "matchData", StreamMatchInfoManager::instance());
+    m_qmlEngine->rootContext()->setContextProperty("matchDataManager", StreamMatchInfoManager::instance());
 
-    TestFoo f;
-    qDebug() << "baf" << f.boo();
     connect( m_qmlEngine, &QQmlEngine::warnings, this, &WindowSingleThreaded::handleWarnings );
     m_qmlEngine->setBaseUrl(url);
     addQmlPath();
@@ -621,4 +619,3 @@ void Snapper::snapRequested()
     emit resultReady();
     m_snapping = false;
 }
-
