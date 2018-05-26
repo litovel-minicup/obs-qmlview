@@ -83,7 +83,6 @@ signals:
     void qmlWarnings(QStringList warnings);
 
 private slots:
-    void doSnap();
     void doLoad();
     void doUnload();
     void doResize(quint32 w, quint32 h);

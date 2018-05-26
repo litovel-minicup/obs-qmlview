@@ -147,7 +147,6 @@ public slots:
 
     bool initialised() { return m_quickInitialized; }
     QVariant getQuery();
-    void requestUpdate();
 
     QStringList loadMessages() { return m_loadMessages; }
     void addMessages(const QStringList &msgs) { m_loadMessages << msgs; }
