@@ -33,16 +33,6 @@ if(NOT Qt5QuickWidgets_FOUND)
         endif()
 endif()
 
-find_package(Qt5WebEngine REQUIRED)
-if(NOT Qt5WebEngine_FOUND)
-        if (ENABLE_UI)
-                message(FATAL_ERROR "Failed to find Qt5 quickmidgets")
-        else()
-                message(STATUS "Qt5 quickmidgets not found - Qmlview disabled")
-                return()
-        endif()
-endif()
-
 set(qmlview_SOURCES
     qmlview.cpp
     renderer.cpp
@@ -63,6 +53,5 @@ target_link_libraries(obs-qmlview
         Qt5::Quick
         Qt5::QuickWidgets
         Qt5::Widgets
-        Qt5::WebEngine
 )
 install_obs_plugin_with_data(obs-qmlview data)
