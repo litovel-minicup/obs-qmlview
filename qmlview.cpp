@@ -393,13 +393,13 @@ static void quickview_source_update(void *data, obs_data_t *settings)
         if( url.isLocalFile() )
         {
             QFileInfo fi( url.toLocalFile() );
-            if( fi.exists() )
+            if( fi.exists() && fi.completeSuffix() == "qml")
                 s->loadUrl( url );
         }
 
 	    else {
 		    QFileInfo fi(url.path());
-            if(fi.exists())
+            if(fi.exists() && fi.completeSuffix() == "qml")
 		        s->loadUrl(url);
 	    }
     }
