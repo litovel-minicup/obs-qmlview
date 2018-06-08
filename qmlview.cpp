@@ -488,8 +488,8 @@ static obs_properties_t *quickview_source_properties(void *data)
     obs_properties_add_bool(props, "unload", obs_module_text("Reload when made visible"));
     obs_properties_add_bool(props, "force", obs_module_text("Force rendering"));
     obs_properties_add_int(props, "fps", obs_module_text("Limited FPS (0 for unlimited"), 0, 60, 1);
-    obs_properties_add_int(props, "width", obs_module_text("Width"), 100, 4096, 1);
-    obs_properties_add_int(props, "height", obs_module_text("Height"), 100, 4096, 1);
+    obs_properties_add_int(props, "width", obs_module_text("Width"), 10, 4096, 1);
+    obs_properties_add_int(props, "height", obs_module_text("Height"), 10, 4096, 1);
 
     return props;
 }
