@@ -214,7 +214,7 @@ bool OBSQuickview::obsdraw()
 {
     if( !obs_source_active(source) )
     {
-        qDebug() << "Scene isn't active.";
+        //qDebug() << "Scene isn't active.";
         return false;
     }
 
