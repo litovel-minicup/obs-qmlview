@@ -3,6 +3,8 @@ project(obs-qmlview)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 set(CMAKE_AUTOMOC TRUE)
 
+find_package(Qt5 COMPONENTS Core)
+
 find_package(Qt5Quick REQUIRED)
 if(NOT Qt5Quick_FOUND)
         if (ENABLE_UI)
@@ -38,7 +40,7 @@ set(qmlview_SOURCES
     renderer.cpp
 )
 
-set( qmlview_HEADERS
+set(qmlview_HEADERS
     qmlview.h
     renderer.h
 )
@@ -51,6 +53,7 @@ target_link_libraries(obs-qmlview
         match-info-manager
         match-connection
         libobs
+        Qt5::Core
         Qt5::Quick
         Qt5::QuickWidgets
         Qt5::Widgets
