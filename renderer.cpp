@@ -39,6 +39,8 @@
 ****************************************************************************/
 
 #include "renderer.h"
+#include "../../match-connection/reconnectingsocket.h"
+#include "../../match-info-manager/streammatchinfomanager.h"
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QOpenGLFramebufferObject>
@@ -55,13 +57,9 @@
 #include <QQuickWindow>
 #include <QQuickRenderControl>
 #include <QCoreApplication>
-#include <QJsonDocument>
 
 #include <QDir>
 #include <QUrlQuery>
-
-#include "../../match-info-manager/streammatchinfomanager.h"
-
 
 class RenderControl : public QQuickRenderControl
 {
@@ -452,12 +450,12 @@ void WindowSingleThreaded::startQuick(const QUrl &url)
 
     // Create a QML engine.
     m_qmlEngine = new QQmlEngine;
-
     if (!m_qmlEngine->incubationController())
         m_qmlEngine->setIncubationController(m_quickWindow->incubationController());
 
     m_qmlEngine->rootContext()->setContextProperty("engine", this);
-    m_qmlEngine->rootContext()->setContextProperty("matchDataManager", StreamMatchInfoManager::instance());
+    m_qmlEngine->rootContext()->setContextProperty(
+            "matchData", StreamMatchInfoManager::instance());
 
     connect( m_qmlEngine, &QQmlEngine::warnings, this, &WindowSingleThreaded::handleWarnings );
     m_qmlEngine->setBaseUrl(url);
@@ -619,3 +617,4 @@ void Snapper::snapRequested()
     emit resultReady();
     m_snapping = false;
 }
+
