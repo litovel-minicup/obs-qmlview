@@ -455,7 +455,7 @@ void WindowSingleThreaded::startQuick(const QUrl &url)
 
     m_qmlEngine->rootContext()->setContextProperty("engine", this);
     m_qmlEngine->rootContext()->setContextProperty(
-            "matchData", StreamMatchInfoManager::instance());
+            "matchDataManager", StreamMatchInfoManager::instance());
 
     connect( m_qmlEngine, &QQmlEngine::warnings, this, &WindowSingleThreaded::handleWarnings );
     m_qmlEngine->setBaseUrl(url);
