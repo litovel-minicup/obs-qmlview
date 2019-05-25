@@ -387,20 +387,23 @@ static void quickview_source_update(void *data, obs_data_t *settings)
 
     s->m_persistent = !unload;
     QString str( QString::fromLocal8Bit(file) );
+    if(!str.contains("file:///"))
+        str = "file:///" + str;
     QUrl url(str);
-    if( url.isValid() && !url.isEmpty() )
+
+    if (url.isValid() && !url.isEmpty())
     {
-        if( url.isLocalFile() )
-        {
-            QFileInfo fi( url.toLocalFile() );
-            if( fi.exists() && fi.completeSuffix() == "qml")
-                s->loadUrl( url );
-        }
+	    if (url.isLocalFile())
+	    {
+		    QFileInfo fi(url.toLocalFile());
+		    if (fi.exists() && fi.completeSuffix() == "qml")
+			    s->loadUrl(url);
+	    }
 
 	    else {
 		    QFileInfo fi(url.path());
-            if(fi.exists() && fi.completeSuffix() == "qml")
-		        s->loadUrl(url);
+		    if (fi.exists() && fi.completeSuffix() == "qml")
+			    s->loadUrl(url);
 	    }
     }
 }
@@ -484,12 +487,14 @@ static obs_properties_t *quickview_source_properties(void *data)
     Q_UNUSED(data);
 
     obs_properties_t *props = obs_properties_create();
-    obs_properties_add_text(props, "file", obs_module_text("URL (eg: file:///C:/scenes/main.qml)"), OBS_TEXT_DEFAULT);
+    obs_properties_add_path(props, "file", obs_module_text("URL (eg: (file:///)C:/scenes/main.qml)"), OBS_PATH_FILE, "*.qml", "");
+
+    obs_properties_add_int(props, "width", obs_module_text("Width"), 10, 4096, 1);
+    obs_properties_add_int(props, "height", obs_module_text("Height"), 10, 4096, 1);
+
     obs_properties_add_bool(props, "unload", obs_module_text("Reload when made visible"));
     obs_properties_add_bool(props, "force", obs_module_text("Force rendering"));
     obs_properties_add_int(props, "fps", obs_module_text("Limited FPS (0 for unlimited"), 0, 60, 1);
-    obs_properties_add_int(props, "width", obs_module_text("Width"), 10, 4096, 1);
-    obs_properties_add_int(props, "height", obs_module_text("Height"), 10, 4096, 1);
 
     return props;
 }
