@@ -55,6 +55,7 @@ public:
     bool obsdraw();
     void renderFrame(gs_effect_t *effect);
     void renderFrameCustom(gs_effect_t *effect);
+    QUrl qmlSource() const;
 
     void makeWidget();
     void makeTexture();

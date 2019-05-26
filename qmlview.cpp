@@ -313,6 +313,11 @@ void OBSQuickview::renderFrameCustom(gs_effect_t *effect)
     m_renderCounter->inc();
 }
 
+QUrl OBSQuickview::qmlSource() const
+{
+	return m_source;
+}
+
 bool OBSQuickview::frameDue()
 {
     if( !m_frameLimited )
@@ -482,12 +487,28 @@ static void quickview_source_tick(void *data, float seconds)
         */
 }
 
+bool refreshQml(obs_properties_t *props,
+	obs_property_t *property, void *data) {
+	Q_UNUSED(props);
+	Q_UNUSED(property);
+
+        //obs_property
+	OBSQuickview *s = (OBSQuickview *)data;
+	QUrl url = s->qmlSource();
+
+	s->loadUrl(url);
+
+	return true;
+}
+
 static obs_properties_t *quickview_source_properties(void *data)
 {
     Q_UNUSED(data);
 
     obs_properties_t *props = obs_properties_create();
     obs_properties_add_path(props, "file", obs_module_text("URL (eg: (file:///)C:/scenes/main.qml)"), OBS_PATH_FILE, "*.qml", "");
+    obs_properties_add_button(props, "refreshqml", "Refresh", &refreshQml);
+    obs_properties_add_bool(props, "text", "tex");
 
     obs_properties_add_int(props, "width", obs_module_text("Width"), 10, 4096, 1);
     obs_properties_add_int(props, "height", obs_module_text("Height"), 10, 4096, 1);
