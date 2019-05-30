@@ -114,7 +114,7 @@ void OBSQuickview::makeTexture()
     m_canvas = QImage( w, h, QImage::Format_RGBA8888 );
     texture = gs_texture_create( w, h, GS_RGBA, 1, (const uint8_t **)&m_bits, GS_DYNAMIC );
     obs_leave_graphics();
-    qDebug() << "makeTexture(" << w << "x" << h << ")";
+    //qDebug() << "makeTexture(" << w << "x" << h << ")";
 }
 
 void OBSQuickview::loadUrl(QUrl url)
@@ -140,7 +140,7 @@ void OBSQuickview::doUnload()
 void OBSQuickview::resize( quint32 w, quint32 h )
 {
     m_size = QSize(w, h);
-    qDebug() << "Resize: " << m_size;
+    //qDebug() << "Resize: " << m_size;
     emit wantResize(w, h);
 }
 
@@ -212,9 +212,9 @@ void OBSQuickview::qmlCopy()
 
 bool OBSQuickview::obsdraw()
 {
-    if( !obs_source_active(source) )
+    if( !obs_source_active(source) && false)
     {
-        //qDebug() << "Scene isn't active.";
+        qDebug() << "Scene isn't active.";
         return false;
     }
 

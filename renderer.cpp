@@ -318,7 +318,7 @@ QVariant WindowSingleThreaded::getQuery()
 
 void WindowSingleThreaded::resize(QSize newSize)
 {
-    qDebug() << "Resizing: " << newSize;
+    //qDebug() << "Resizing: " << newSize;
     QWindow::resize(newSize);
 
     // If this is a resize after the scene is up and running, recreate the fbo and the
